@@ -1,4 +1,4 @@
-package com.utbm.fisa.communicationapi;
+package fr.utbm.fisa.communicationapi.exposition;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
