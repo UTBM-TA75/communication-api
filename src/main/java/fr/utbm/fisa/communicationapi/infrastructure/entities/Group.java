@@ -9,13 +9,13 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-public class User {
+public class Group {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "user_id")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "group_id")
+    private int id;
 
-    private String name;
+    private String label;
 
-    private String email;
 }
