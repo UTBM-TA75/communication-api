@@ -1,4 +1,4 @@
-package fr.utbm.fisa.communicationapi.infrastructure.entities;
+package fr.utbm.fisa.communicationapi.infrastructure.db.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,6 +1,6 @@
-package fr.utbm.fisa.communicationapi.infrastructure.repositories;
+package fr.utbm.fisa.communicationapi.domain.repositories;
 
-import fr.utbm.fisa.communicationapi.infrastructure.entities.User;
+import fr.utbm.fisa.communicationapi.infrastructure.db.entities.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;
