@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.swing.*;
 import java.util.UUID;
 
-@Entity
+@Embeddable
 @Getter
 @Setter
 public class Group_has_user {
