@@ -32,5 +32,6 @@ public class Communication {
 
     @ManyToOne
     @JoinColumn(name = "communication_type_id")
+    @Column(name = "type")
     private Communication_type type;
 }
