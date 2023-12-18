@@ -1,12 +1,9 @@
 package fr.utbm.fisa.communicationapi.exposition.controller;
 
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Group;
-import fr.utbm.fisa.communicationapi.infrastructure.entities.User;
 import fr.utbm.fisa.communicationapi.infrastructure.repositories.GroupRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
