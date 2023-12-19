@@ -40,6 +40,15 @@ public class Usr {
     @OneToMany(mappedBy = "sender")
     private List<Communication> sentCommunications;
 
+    @OneToMany(mappedBy = "userId")
+    private List<Message> messageOwner;
+
+    @OneToMany(mappedBy = "user1")
+    private List<Discussion> discUser1;
+
+    @OneToMany(mappedBy = "user2")
+    private List<Discussion> discUser2;
+
     public enum UserType{
         Parent,
         Staff

@@ -6,13 +6,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Group {
+public class Classroom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_id")
@@ -20,10 +19,11 @@ public class Group {
 
     private String label;
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "classroom")
     private List<Communication> sentGroupCommunications;
 
-    public Group(Long id, String label) {
+
+    public Classroom(Long id, String label) {
         this.id = id;
         this.label = label;
     }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -26,6 +27,9 @@ public class Poll {
     @ManyToOne
     @JoinColumn(name = "communication_id")
     private Communication communication;
+
+    @OneToMany(mappedBy = "poll")
+    private List<Poll_answer> listPollAnswer;
 
     public Poll(int id, String description, Timestamp closingDate, Communication communication) {
         this.id = id;

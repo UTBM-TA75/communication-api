@@ -21,7 +21,7 @@ public class Message {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User userId;
+    private Usr userId;
 
     @ManyToOne
     @JoinColumn(name = "discussion_id")
@@ -35,7 +35,7 @@ public class Message {
 
     private Timestamp seenDate;
 
-    public Message(int id, User userId, Discussion discussionId, String body, Timestamp sentDate, Boolean seen, Timestamp seenDate) {
+    public Message(int id, Usr userId, Discussion discussionId, String body, Timestamp sentDate, Boolean seen, Timestamp seenDate) {
         this.id = id;
         this.userId = userId;
         this.discussionId = discussionId;
@@ -53,11 +53,11 @@ public class Message {
         this.id = id;
     }
 
-    public User getUserId() {
+    public Usr getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
+    public void setUserId(Usr userId) {
         this.userId = userId;
     }
 

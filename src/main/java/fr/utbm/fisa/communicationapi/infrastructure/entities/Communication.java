@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,11 +21,11 @@ public class Communication {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User sender;
+    private Usr sender;
 
     @ManyToOne
     @JoinColumn(name = "group_id")
-    private Group group;
+    private Classroom classroom;
 
     private String title;
 
@@ -36,10 +37,13 @@ public class Communication {
     @JoinColumn(name = "communication_type_id")
     private Communication_type type;
 
-    public Communication(int id, User sender, Group group, String title, String body, Timestamp sendDate, Communication_type type) {
+    @OneToMany(mappedBy = "communication")
+    private List<Poll> comPollId;
+
+    public Communication(int id, Usr sender, Classroom classroom, String title, String body, Timestamp sendDate, Communication_type type) {
         this.id = id;
         this.sender = sender;
-        this.group = group;
+        this.classroom = classroom;
         this.title = title;
         this.body = body;
         this.sendDate = sendDate;
@@ -54,20 +58,20 @@ public class Communication {
         this.id = id;
     }
 
-    public User getSender() {
+    public Usr getSender() {
         return sender;
     }
 
-    public void setSender(User sender) {
+    public void setSender(Usr sender) {
         this.sender = sender;
     }
 
-    public Group getGroup() {
-        return group;
+    public Classroom getClassroom() {
+        return classroom;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
+    public void setClassroom(Classroom classroom) {
+        this.classroom = classroom;
     }
 
     public String getTitle() {
