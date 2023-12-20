@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -23,12 +24,12 @@ public class Classroom {
 
     private String promotion;
 
-    @OneToMany(mappedBy = "idClass")
-    private List<Teacher_classes> classList;
-
     @OneToMany(mappedBy = "idClassroom")
     private List<Communication> communicationPerClassList;
 
-    @OneToMany(mappedBy = "idClass")
-    private List<Pupil_classes> classPupilList;
+    @ManyToMany
+    private Set<Teacher> classUnderTeacher;
+
+    @ManyToMany
+    private Set<Pupil> pupilClasses;
 }

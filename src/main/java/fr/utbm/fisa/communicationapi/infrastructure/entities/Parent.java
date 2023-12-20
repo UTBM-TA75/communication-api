@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -29,9 +30,9 @@ public class Parent {
 
     private Timestamp deleteAt;
 
-    @OneToMany(mappedBy = "idParent")
-    private List<User_answer> parentAnswerList;
+    @ManyToMany
+    private Set<Pupil> parentOfPupil;
 
-    @OneToMany(mappedBy = "idParent")
-    private List<Parent_children> parentChildrenList;
+    @ManyToMany
+    private Set<Poll_answer> userAnswer;
 }

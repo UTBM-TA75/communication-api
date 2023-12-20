@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -34,6 +35,12 @@ public class Pupil {
 
     @Enumerated(EnumType.STRING)
     private RegistrationStatus registration_Status;
+
+    @ManyToMany
+    private Set<Parent> pupilUnderParent;
+
+    @ManyToMany
+    private Set<Classroom> classroomOfPupil;
 
     public enum RegistrationStatus{
         OnGoing,
