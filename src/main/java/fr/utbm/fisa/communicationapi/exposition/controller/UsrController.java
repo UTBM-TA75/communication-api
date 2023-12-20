@@ -2,14 +2,9 @@ package fr.utbm.fisa.communicationapi.exposition.controller;
 
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Usr;
 import fr.utbm.fisa.communicationapi.infrastructure.repositories.UsrRepository;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
-import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -25,7 +20,19 @@ public class UsrController {
     public Usr create(@RequestBody Usr user) {
         Usr u = new Usr();
         u.setUsername(user.getUsername());
+        u.setPassword(user.getPassword());
         u.setEmail(user.getEmail());
+        u.setCreatedAt(user.getCreatedAt());
+        u.setUpdatedAt(user.getUpdatedAt());
+        u.setDeletedAt(user.getDeletedAt());
+        u.setIsAdmin(user.getIsAdmin());
+        u.setUserType(user.getUserType());
+        u.setProfilePicture(user.getProfilePicture());
+        u.setSenderList(user.getSenderList());
+        u.setCommunicationSenderList(user.getCommunicationSenderList());
+        u.setDiscussionUser1List(user.getDiscussionUser1List());
+        u.setDiscussionUser2List(user.getDiscussionUser2List());
+        u.setUserList(user.getUserList());
         return usrRepository.save(u);
     }
 
@@ -33,13 +40,26 @@ public class UsrController {
     public void delete(@RequestBody Usr user) {
         usrRepository.deleteById(user.getId());
     }
+
     @PostMapping("/users/edit")
-    public void edit(@RequestBody Usr usr) {
-        usrRepository.findById(usr.getId()).map(
-            user -> {
-                user.setEmail(usr.getEmail());
-                user.setUsername(usr.getUsername());
-                return usrRepository.save(user);
+    public void edit(@RequestBody Usr user) {
+        usrRepository.findById(user.getId()).map(
+            u -> {
+                u.setUsername(user.getUsername());
+                u.setPassword(user.getPassword());
+                u.setEmail(user.getEmail());
+                u.setCreatedAt(user.getCreatedAt());
+                u.setUpdatedAt(user.getUpdatedAt());
+                u.setDeletedAt(user.getDeletedAt());
+                u.setIsAdmin(user.getIsAdmin());
+                u.setUserType(user.getUserType());
+                u.setProfilePicture(user.getProfilePicture());
+                u.setSenderList(user.getSenderList());
+                u.setCommunicationSenderList(user.getCommunicationSenderList());
+                u.setDiscussionUser1List(user.getDiscussionUser1List());
+                u.setDiscussionUser2List(user.getDiscussionUser2List());
+                u.setUserList(user.getUserList());
+                return usrRepository.save(u);
             }
         );
     }
