@@ -33,18 +33,13 @@ public class UserController {
         userRepository.deleteById(user.getId());
     }
     @PostMapping("/users/edit")
-    public void edit(@RequestParam UUID id,
-                             @RequestParam String name,
-                             @RequestParam String email) {
-        userRepository.findById(id).map(
+    public void edit(@RequestBody User usr) {
+        userRepository.findById(usr.getId()).map(
             user -> {
-                user.setEmail(email);
-                user.setName(name);
+                user.setEmail(usr.getEmail());
+                user.setName(usr.getName());
                 return userRepository.save(user);
             }
         );
     }
-
-
-
 }
