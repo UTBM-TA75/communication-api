@@ -2,22 +2,22 @@ package fr.utbm.fisa.communicationapi.infrastructure.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-public class User_answer {
+public class Classlevel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
-    private Parent idParent;
+    private String name;
 
-    @ManyToOne
-    private Poll_answer idAnswer;
+    @OneToMany(mappedBy = "idLevel")
+    private List<Classroom> idLevelList;
 }

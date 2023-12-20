@@ -20,6 +20,6 @@ public class Communication_type {
     private String label;
 
     @OneToMany(mappedBy = "type")
-    private List<Communication> sentTypeCommunications;
+    private List<Communication> TypeCommunicationsList;
 
 }

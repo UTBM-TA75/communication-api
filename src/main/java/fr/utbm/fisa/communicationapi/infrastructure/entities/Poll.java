@@ -26,47 +26,8 @@ public class Poll {
 
     @ManyToOne
     @JoinColumn(name = "communication_id")
-    private Communication communication;
+    private Communication idCommunication;
 
     @OneToMany(mappedBy = "poll")
     private List<Poll_answer> listPollAnswer;
-
-    public Poll(int id, String description, Timestamp closingDate, Communication communication) {
-        this.id = id;
-        this.description = description;
-        this.closingDate = closingDate;
-        this.communication = communication;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Timestamp getClosingDate() {
-        return closingDate;
-    }
-
-    public void setClosingDate(Timestamp closingDate) {
-        this.closingDate = closingDate;
-    }
-
-    public Communication getCommunication() {
-        return communication;
-    }
-
-    public void setCommunication(Communication communication) {
-        this.communication = communication;
-    }
 }

@@ -14,33 +14,21 @@ import java.util.List;
 public class Classroom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "group_id")
+    @Column(name = "id")
     private Long id;
 
-    private String label;
+    @ManyToOne
+    @JoinColumn(name = "idLevel")
+    private Classlevel idLevel;
 
-    @OneToMany(mappedBy = "classroom")
-    private List<Communication> sentGroupCommunications;
+    private String promotion;
 
+    @OneToMany(mappedBy = "idClass")
+    private List<Teacher_classes> classList;
 
-    public Classroom(Long id, String label) {
-        this.id = id;
-        this.label = label;
-    }
+    @OneToMany(mappedBy = "idClassroom")
+    private List<Communication> communicationPerClassList;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
+    @OneToMany(mappedBy = "idClass")
+    private List<Pupil_classes> classPupilList;
 }
