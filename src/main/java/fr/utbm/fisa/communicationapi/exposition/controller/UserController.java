@@ -21,19 +21,17 @@ public class UserController {
     }
 
     @PostMapping("/users/create")
-    public User create(@RequestParam String name,
-                           @RequestParam String email) {
+    public User create(@RequestBody User user) {
         User u = new User();
-        u.setName(name);
-        u.setEmail(email);
+        u.setName(user.getName());
+        u.setEmail(user.getEmail());
         return userRepository.save(u);
     }
 
     @GetMapping("/users/delete")
-    public void delete(@RequestParam UUID id) {
-        userRepository.deleteById(id);
+    public void delete(@RequestBody User user) {
+        userRepository.deleteById(user.getId());
     }
-
     @PostMapping("/users/edit")
     public void edit(@RequestParam UUID id,
                              @RequestParam String name,

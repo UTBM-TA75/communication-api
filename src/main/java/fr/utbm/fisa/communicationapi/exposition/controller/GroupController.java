@@ -17,7 +17,7 @@ public class GroupController {
     }
 
     @PostMapping("/groups/create")
-    public Group create(@RequestParam Integer id,
+    public Group create(@RequestParam Long id,
                         @RequestParam String label) {
         Group g = new Group();
         g.setId(id);
@@ -26,12 +26,12 @@ public class GroupController {
     }
 
     @GetMapping("/groups/delete")
-    public void delete(@RequestParam Integer id) {
+    public void delete(@RequestParam Long id) {
         groupRepository.deleteById(id);
     }
 
     @PostMapping("/groups/edit")
-    public void edit(@RequestParam Integer id,
+    public void edit(@RequestParam Long id,
                      @RequestParam String label) {
         groupRepository.findById(id).map(
                 group -> {
