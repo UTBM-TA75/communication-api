@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -23,6 +24,6 @@ public class Teacher {
 
     private Timestamp endDate;
 
-    @OneToMany(mappedBy = "idTeacher")
-    private List<Teacher_classes> teacherList;
+    @ManyToMany
+    private Set<Classroom> teacherClasses;
 }

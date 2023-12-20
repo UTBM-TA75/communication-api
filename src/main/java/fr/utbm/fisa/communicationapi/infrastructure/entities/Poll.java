@@ -17,7 +17,7 @@ public class Poll {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "poll_id")
+    @Column(name = "id")
     private int id;
 
     private String description;
@@ -25,9 +25,8 @@ public class Poll {
     private Timestamp closingDate;
 
     @ManyToOne
-    @JoinColumn(name = "communication_id")
     private Communication idCommunication;
 
-    @OneToMany(mappedBy = "poll")
-    private List<Poll_answer> listPollAnswer;
+    @OneToMany(mappedBy = "idPoll")
+    private List<Poll_answer> pollAnwserPerPollList;
 }
