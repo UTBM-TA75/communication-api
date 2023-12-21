@@ -4,13 +4,13 @@ package fr.utbm.fisa.communicationapi.infrastructure.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.type.descriptor.jdbc.VarcharJdbcType;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
+@Table(name = "staff")
 public class Staff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,8 +25,8 @@ public class Staff {
     private String firstName;
 
     @OneToMany(mappedBy = "idSender")
-    private List<Communication> senderList;
+    private Set<Communication> senderList;
 
     @OneToMany(mappedBy = "idStaff")
-    private List<Teacher> teacherList;
+    private Set<Teacher> teacherList;
 }

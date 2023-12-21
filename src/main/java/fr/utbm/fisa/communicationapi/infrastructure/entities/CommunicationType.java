@@ -4,22 +4,22 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-public class Communication_type {
+@Table(name = "communicationtype")
+public class CommunicationType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "communication_type_id")
-    private int id;
+    private Long id;
 
     private String label;
 
     @OneToMany(mappedBy = "type")
-    private List<Communication> TypeCommunicationsList;
+    private Set<Communication> TypeCommunicationsList;
 
 }

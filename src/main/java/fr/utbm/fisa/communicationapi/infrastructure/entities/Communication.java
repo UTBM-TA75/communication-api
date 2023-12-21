@@ -6,24 +6,25 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "communication")
 public class Communication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @ManyToOne
     private Staff idSender;
 
     @ManyToOne
-    private Classroom idClassroom;
+    private ClassRoom idClassroom;
 
     private String title;
 
@@ -32,8 +33,8 @@ public class Communication {
     private Timestamp sendDate;
 
     @ManyToOne
-    private Communication_type type;
+    private CommunicationType type;
 
     @OneToMany(mappedBy = "idCommunication")
-    private List<Poll> PollList;
+    private Set<Poll> PollList;
 }

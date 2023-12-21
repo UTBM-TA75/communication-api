@@ -5,19 +5,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "discussion")
 public class Discussion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @ManyToOne
     private Usr user1;
@@ -26,5 +26,5 @@ public class Discussion {
     private Usr user2;
 
     @OneToMany(mappedBy = "idDiscussion")
-    private List<Message> discussionList;
+    private Set<Message> discussionList;
 }

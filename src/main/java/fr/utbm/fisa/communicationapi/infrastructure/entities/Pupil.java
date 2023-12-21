@@ -4,13 +4,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
+@Table(name = "pupil")
 public class Pupil {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +40,7 @@ public class Pupil {
     private Set<Parent> pupilUnderParent;
 
     @ManyToMany
-    private Set<Classroom> classroomOfPupil;
+    private Set<ClassRoom> classroomOfPupil;
 
     public enum RegistrationStatus{
         OnGoing,

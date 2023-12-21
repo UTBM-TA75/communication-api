@@ -9,7 +9,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Classlevel {
+@Table(name = "classlevel")
+public class ClassLevel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,5 +20,5 @@ public class Classlevel {
     private String name;
 
     @OneToMany(mappedBy = "idLevel")
-    private List<Classroom> idLevelList;
+    private List<ClassRoom> idLevelList;
 }
