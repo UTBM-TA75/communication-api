@@ -5,9 +5,9 @@ spring:
     show-sql: true
 
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/spring-db
-    username: spring-user
-    password: spring
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/springapp
+    username: leo
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 server:

@@ -1,6 +1,6 @@
 package fr.utbm.fisa.communicationapi.exposition.controller;
 
-import fr.utbm.fisa.communicationapi.infrastructure.entities.User;
+import fr.utbm.fisa.communicationapi.infrastructure.entities.Usr;
 import fr.utbm.fisa.communicationapi.infrastructure.repositories.UserRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserController {
     private final UserRepository userRepository;
-    @GetMapping("/users")
+    
+  @GetMapping("/users")
     public Iterable<User> get() {
         return userRepository.findAll();
     }
