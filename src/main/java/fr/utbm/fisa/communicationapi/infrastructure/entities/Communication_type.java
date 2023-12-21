@@ -14,7 +14,7 @@ public class Communication_type {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "communication_type_id")
+    @Column(name = "id")
     private int id;
 
     private String label;

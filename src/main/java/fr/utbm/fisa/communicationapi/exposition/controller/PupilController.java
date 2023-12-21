@@ -1,7 +1,6 @@
 package fr.utbm.fisa.communicationapi.exposition.controller;
 
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Pupil;
-import fr.utbm.fisa.communicationapi.infrastructure.entities.Usr;
 import fr.utbm.fisa.communicationapi.infrastructure.repositories.PupilRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
