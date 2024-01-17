@@ -1,6 +1,7 @@
 package fr.utbm.fisa.communicationapi.infrastructure.repositories;
 
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Discussion;
+import fr.utbm.fisa.communicationapi.infrastructure.entities.Message;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -12,7 +13,15 @@ public interface DiscussionRepository extends CrudRepository<Discussion, Integer
             nativeQuery = true)
     List<Discussion> findByUsrId(@Param("usrId") Long userId);
 
+    @Query(value = "SELECT * FROM discussion d WHERE d.id = :discussionId",
+            nativeQuery = true)
+    Discussion findByDiscussionId(@Param("discussionId") int discussionId);
+
     @Query(value = "SELECT COUNT(*) FROM message m WHERE m.idDiscussion = :idDiscussion AND m.seen =  0",
             nativeQuery = true)
     Integer countUnseenMessages(@Param("idDiscussion") int idDiscussion);
+
+    @Query(value = "SELECT * FROM message m WHERE m.idDiscussion = :discussionId",
+            nativeQuery = true)
+    List<Message> getMessages(@Param("discussionId") Discussion discussionId);
 }

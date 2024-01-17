@@ -70,4 +70,11 @@ public class DiscussionController {
 
         return previews;
     }
+
+    @GetMapping("/discussions/messages")
+    public Iterable<Message> getMessages(@RequestParam int id){
+        Discussion discussion = discussionRepository.findByDiscussionId(id);
+        return discussionRepository.getMessages(discussion);
+    }
+
 }
