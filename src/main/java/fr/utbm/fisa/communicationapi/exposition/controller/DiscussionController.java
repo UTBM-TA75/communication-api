@@ -1,11 +1,15 @@
 package fr.utbm.fisa.communicationapi.exposition.controller;
 
+import fr.utbm.fisa.communicationapi.domain.dto.HomeDiscussionPreview;
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Discussion;
-import fr.utbm.fisa.communicationapi.infrastructure.entities.Pupil;
+import fr.utbm.fisa.communicationapi.infrastructure.entities.Message;
 import fr.utbm.fisa.communicationapi.infrastructure.repositories.DiscussionRepository;
-import fr.utbm.fisa.communicationapi.infrastructure.repositories.PupilRepository;
+import fr.utbm.fisa.communicationapi.infrastructure.repositories.MessageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class DiscussionController {
     private final DiscussionRepository discussionRepository;
+    private final MessageRepository messageRepository;
     @GetMapping("/discussions")
     public Iterable<Discussion> get() {
         return discussionRepository.findAll();
@@ -42,5 +47,27 @@ public class DiscussionController {
                     return discussionRepository.save(disc);
                 }
         );
+    }
+
+    @GetMapping("/discussions/preview")
+    public Iterable<HomeDiscussionPreview> getPreview(@RequestParam Long usrId) {
+        ArrayList<HomeDiscussionPreview> previews = new ArrayList<>();
+
+        List<Discussion> discussions = discussionRepository.findByUsrId(usrId);
+        for (Discussion d: discussions) {
+            Message lastMessage = messageRepository.findByDiscussionId(d.getId());
+            String otherUser = d.getUser1().getId().equals(usrId) ? d.getUser2().getUsername() : d.getUser1().getUsername();
+            int unseenCount = discussionRepository.countUnseenMessages(d.getId());
+
+            previews.add(
+                HomeDiscussionPreview.builder()
+                    .name(otherUser)
+                    .message(lastMessage.getBody())
+                    .unseenCount(unseenCount)
+                .build()
+            );
+        }
+
+        return previews;
     }
 }
