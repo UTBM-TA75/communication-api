@@ -72,8 +72,8 @@ public class DiscussionController {
     }
 
     @GetMapping("/discussions/messages")
-    public Iterable<Message> getMessages(@RequestParam int id){
-        Discussion discussion = discussionRepository.findByDiscussionId(id);
+    public Iterable<Message> getMessages(@RequestParam int discussionId){
+        Discussion discussion = discussionRepository.findByDiscussionId(discussionId);
         return discussionRepository.getMessages(discussion);
     }
 
