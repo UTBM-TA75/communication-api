@@ -4,7 +4,10 @@ import fr.utbm.fisa.communicationapi.infrastructure.entities.Communication;
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Pupil;
 import fr.utbm.fisa.communicationapi.infrastructure.repositories.CommunicationRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
@@ -12,42 +15,76 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CommunicationController {
     private final CommunicationRepository communicationRepository;
+
+    /**
+     * Gets all the communications
+     *
+     * @return the list of communications
+     */
     @GetMapping("/communications")
-    public Iterable<Communication> get() {
-        return communicationRepository.findAll();
+    public ResponseEntity<Iterable<Communication>> getAllCommunication() {
+        return ResponseEntity.ok(communicationRepository.findAll());
     }
 
-    @PostMapping("/communications/create")
-    public Communication create(@RequestBody Communication communication) {
-        Communication comm = new Communication();
-        comm.setIdSender(communication.getIdSender());
-        comm.setIdClassroom(communication.getIdClassroom());
-        comm.setTitle(communication.getTitle());
-        comm.setBody(communication.getBody());
-        comm.setSendDate(communication.getSendDate());
-        comm.setType(communication.getType());
-        comm.setPollList(communication.getPollList());
-        return communicationRepository.save(comm);
+    /**
+     * Create a communication
+     *
+     * @param data the communication's data
+     * @return the created communication
+     */
+    @PostMapping("/communications")
+    public ResponseEntity<Communication> createCommunication(@RequestBody Communication data) {
+        Communication communication = new Communication();
+        communication.setIdSender(data.getIdSender());
+        communication.setIdClassroom(data.getIdClassroom());
+        communication.setTitle(data.getTitle());
+        communication.setBody(data.getBody());
+        communication.setSendDate(data.getSendDate());
+        communication.setType(data.getType());
+        communication.setPollList(data.getPollList());
+
+        communicationRepository.save(communication);
+
+        return new ResponseEntity<>(communication, HttpStatus.CREATED);
     }
 
-    @GetMapping("/communications/delete")
-    public void delete(@RequestBody Communication communication) {
+    /**
+     * Deletes a communication
+     *
+     * @param id the communication's id
+     */
+    @DeleteMapping("/communications/{id}")
+    public void delete(@PathVariable int id) {
+        Communication communication = communicationRepository
+                .findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No communication found with id " + id));
+
         communicationRepository.deleteById(communication.getId());
     }
 
-    @PostMapping("/communications/edit")
-    public void edit(@RequestBody Communication communication) {
-        communicationRepository.findById(communication.getId()).map(
-                comm -> {
-                    comm.setIdSender(communication.getIdSender());
-                    comm.setIdClassroom(communication.getIdClassroom());
-                    comm.setTitle(communication.getTitle());
-                    comm.setBody(communication.getBody());
-                    comm.setSendDate(communication.getSendDate());
-                    comm.setType(communication.getType());
-                    comm.setPollList(communication.getPollList());
-                    return communicationRepository.save(comm);
-                }
-        );
+    /**
+     * Updates a communication
+     *
+     * @param id   the communication's id
+     * @param data the communication's updated data
+     * @return the updated communication
+     */
+    @PutMapping("/communications/{id}")
+    public ResponseEntity<Communication> edit(@PathVariable int id, @RequestBody Communication data) {
+        Communication communication = communicationRepository
+                .findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No communication found with id " + id));
+
+        communication.setIdSender(data.getIdSender());
+        communication.setIdClassroom(data.getIdClassroom());
+        communication.setTitle(data.getTitle());
+        communication.setBody(data.getBody());
+        communication.setSendDate(data.getSendDate());
+        communication.setType(data.getType());
+        communication.setPollList(data.getPollList());
+
+        communicationRepository.save(communication);
+
+        return ResponseEntity.ok(communication);
     }
 }
