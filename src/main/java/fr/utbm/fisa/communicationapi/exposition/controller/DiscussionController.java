@@ -87,7 +87,7 @@ public class DiscussionController {
 
         List<Discussion> discussions = discussionRepository.findByUsrId(usrId);
         for (Discussion d : discussions) {
-            Message lastMessage = messageRepository.findByDiscussionId(d.getId());
+            Message lastMessage = messageRepository.findMessageByIdDiscussion(d);
             String otherUser = d.getUser1().getId().equals(usrId) ? d.getUser2().getUsername() : d.getUser1().getUsername();
             int unseenCount = discussionRepository.countUnseenMessages(d.getId());
 
@@ -115,6 +115,6 @@ public class DiscussionController {
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No discussion with id " + id));
 
-        return ResponseEntity.ok(discussionRepository.getMessages(id));
+        return ResponseEntity.ok(messageRepository.findMessagesByIdDiscussion(discussion));
     }
 }
