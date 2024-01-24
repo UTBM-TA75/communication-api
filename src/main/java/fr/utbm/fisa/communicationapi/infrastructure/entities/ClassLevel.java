@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Classlevel {
+public class ClassLevel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
