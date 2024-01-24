@@ -5,14 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Poll_answer {
+public class PollAnswer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
