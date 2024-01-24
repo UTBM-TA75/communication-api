@@ -20,7 +20,7 @@ public class Classroom {
 
     @ManyToOne
     @JoinColumn(name = "idLevel")
-    private Classlevel idLevel;
+    private ClassLevel idLevel;
 
     private String promotion;
 
