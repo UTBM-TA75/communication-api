@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,5 +33,5 @@ public class Parent {
     private Set<Pupil> parentOfPupil;
 
     @ManyToMany
-    private Set<Poll_answer> userAnswer;
+    private Set<PollAnswer> userAnswer;
 }

@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -28,5 +27,5 @@ public class Poll {
     private Communication idCommunication;
 
     @OneToMany(mappedBy = "idPoll")
-    private List<Poll_answer> pollAnwserPerPollList;
+    private List<PollAnswer> pollAnwserPerPollList;
 }
