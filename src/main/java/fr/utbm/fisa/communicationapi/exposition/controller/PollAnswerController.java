@@ -38,7 +38,7 @@ public class PollAnswerController {
      * @param id the poll answer's id
      */
     @DeleteMapping("/poll_answers/{id}")
-    public void deletePollAnswer(@PathVariable int id) {
+    public void deletePollAnswer(@PathVariable Long id) {
         PollAnswer pollAnswer = poll_answerRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No poll answer found with id " + id));
@@ -54,7 +54,7 @@ public class PollAnswerController {
      * @return the updated poll answer
      */
     @PutMapping("/poll_answers/{id}")
-    public ResponseEntity<PollAnswer> editPollAnswer(@PathVariable int id, @RequestBody PollAnswer data) {
+    public ResponseEntity<PollAnswer> editPollAnswer(@PathVariable Long id, @RequestBody PollAnswer data) {
         PollAnswer pollAnswer = poll_answerRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No poll answer found with id " + id));

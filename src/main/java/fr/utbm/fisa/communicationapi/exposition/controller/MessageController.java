@@ -1,7 +1,6 @@
 package fr.utbm.fisa.communicationapi.exposition.controller;
 
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Message;
-import fr.utbm.fisa.communicationapi.infrastructure.entities.Pupil;
 import fr.utbm.fisa.communicationapi.infrastructure.repositories.MessageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,7 +39,7 @@ public class MessageController {
      * @param id the message's id
      */
     @GetMapping("/messages/{id}")
-    public void delete(@PathVariable int id) {
+    public void delete(@PathVariable Long id) {
         Message message = messageRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No message found with id " + id));
@@ -56,7 +55,7 @@ public class MessageController {
      * @return the updated message
      */
     @PutMapping("/messages/{id}")
-    public ResponseEntity<Message> edit(@PathVariable int id, @RequestBody Message data) {
+    public ResponseEntity<Message> edit(@PathVariable Long id, @RequestBody Message data) {
         Message message = messageRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No message found with id " + id));

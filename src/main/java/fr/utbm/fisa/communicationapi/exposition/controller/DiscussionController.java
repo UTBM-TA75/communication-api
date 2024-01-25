@@ -39,7 +39,7 @@ public class DiscussionController {
      * @return the discussion
      */
     @GetMapping("/discussion/{id}")
-    public ResponseEntity<Discussion> getDiscussion(@PathVariable int id) {
+    public ResponseEntity<Discussion> getDiscussion(@PathVariable Long id) {
         Discussion d = discussionRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No discussion found with the id " + id));
@@ -72,7 +72,7 @@ public class DiscussionController {
      * @param id the discussion id
      */
     @DeleteMapping("/discussions/{id}")
-    public void deleteDiscussion(@PathVariable int id) {
+    public void deleteDiscussion(@PathVariable Long id) {
         Discussion d = discussionRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No discussion found with id " + id));
@@ -110,7 +110,7 @@ public class DiscussionController {
      * @return the message list of the discussion
      */
     @GetMapping("/discussions/{id}/messages")
-    public ResponseEntity<Iterable<Message>> getMessages(@PathVariable int id) {
+    public ResponseEntity<Iterable<Message>> getMessages(@PathVariable Long id) {
         Discussion discussion = discussionRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No discussion with id " + id));

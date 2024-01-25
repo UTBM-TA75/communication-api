@@ -1,7 +1,6 @@
 package fr.utbm.fisa.communicationapi.exposition.controller;
 
-import fr.utbm.fisa.communicationapi.infrastructure.entities.Classroom;
-import fr.utbm.fisa.communicationapi.infrastructure.entities.Pupil;
+import fr.utbm.fisa.communicationapi.infrastructure.entities.ClassRoom;
 import fr.utbm.fisa.communicationapi.infrastructure.repositories.ClassroomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +20,7 @@ public class ClassroomController {
      * @return the list of classrooms
      */
     @GetMapping("/classrooms")
-    public ResponseEntity<Iterable<Classroom>> getAllClassrooms() {
+    public ResponseEntity<Iterable<ClassRoom>> getAllClassrooms() {
         return ResponseEntity.ok(classroomRepository.findAll());
     }
 
@@ -31,8 +30,8 @@ public class ClassroomController {
      * @return the classroom
      */
     @GetMapping("/classrooms/{id}")
-    public ResponseEntity<Classroom> getClassroom(@PathVariable Long id){
-        Classroom classroom = classroomRepository
+    public ResponseEntity<ClassRoom> getClassroom(@PathVariable Long id) {
+        ClassRoom classroom = classroomRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No classroom found with id " + id));
 
@@ -46,8 +45,8 @@ public class ClassroomController {
      * @return the created classroom
      */
     @PostMapping("/classrooms")
-    public ResponseEntity<Classroom> createClassroom(@RequestBody Classroom data) {
-        Classroom classroom = new Classroom();
+    public ResponseEntity<ClassRoom> createClassroom(@RequestBody ClassRoom data) {
+        ClassRoom classroom = new ClassRoom();
         classroom.setIdLevel(data.getIdLevel());
         classroom.setPromotion(data.getPromotion());
         classroom.setCommunicationPerClassList(data.getCommunicationPerClassList());
@@ -74,8 +73,8 @@ public class ClassroomController {
      * @return the updated classroom
      */
     @PutMapping("/classrooms/{id}")
-    public ResponseEntity<Classroom> updateClassroom(@PathVariable Long id, @RequestBody Classroom data) {
-        Classroom classroom = classroomRepository
+    public ResponseEntity<ClassRoom> updateClassroom(@PathVariable Long id, @RequestBody ClassRoom data) {
+        ClassRoom classroom = classroomRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No classroom found with the id " + id));
 

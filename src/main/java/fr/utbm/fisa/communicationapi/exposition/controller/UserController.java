@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class UsrController {
+public class UserController {
     private final UsrRepository usrRepository;
 
     /**

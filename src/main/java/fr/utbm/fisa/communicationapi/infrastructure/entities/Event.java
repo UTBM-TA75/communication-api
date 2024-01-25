@@ -17,7 +17,7 @@ import java.util.Date;
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String title;
 
@@ -34,7 +34,7 @@ public class Event {
     private String imageUrl;
 
     @ManyToOne
-    private Classroom classroom;
+    private ClassRoom classroom;
 
     @ManyToOne
     private Usr createdBy;

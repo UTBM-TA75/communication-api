@@ -43,7 +43,7 @@ public class EventController {
      * @return the event
      */
     @GetMapping("/events/{id}")
-    public ResponseEntity<Event> getEvent(@PathVariable int id) {
+    public ResponseEntity<Event> getEvent(@PathVariable Long id) {
         Event event = eventRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No event found with id " + id));
@@ -82,7 +82,7 @@ public class EventController {
      * @return the updated event
      */
     @PutMapping("/events/{id}")
-    public ResponseEntity<Event> updateEvent(@PathVariable int id, @RequestBody Event data) {
+    public ResponseEntity<Event> updateEvent(@PathVariable Long id, @RequestBody Event data) {
         Event event = eventRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No event found with id " + id));
@@ -106,7 +106,7 @@ public class EventController {
      * @param id the event's id
      */
     @DeleteMapping("/events/{id}")
-    public void deleteEvent(@PathVariable int id) {
+    public void deleteEvent(@PathVariable Long id) {
         Event event = eventRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No event found with id " + id));

@@ -1,7 +1,6 @@
 package fr.utbm.fisa.communicationapi.exposition.controller;
 
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Communication;
-import fr.utbm.fisa.communicationapi.infrastructure.entities.Pupil;
 import fr.utbm.fisa.communicationapi.infrastructure.repositories.CommunicationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -54,7 +53,7 @@ public class CommunicationController {
      * @param id the communication's id
      */
     @DeleteMapping("/communications/{id}")
-    public void delete(@PathVariable int id) {
+    public void delete(@PathVariable Long id) {
         Communication communication = communicationRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No communication found with id " + id));
@@ -70,7 +69,7 @@ public class CommunicationController {
      * @return the updated communication
      */
     @PutMapping("/communications/{id}")
-    public ResponseEntity<Communication> edit(@PathVariable int id, @RequestBody Communication data) {
+    public ResponseEntity<Communication> edit(@PathVariable Long id, @RequestBody Communication data) {
         Communication communication = communicationRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No communication found with id " + id));

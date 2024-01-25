@@ -1,17 +1,19 @@
 package fr.utbm.fisa.communicationapi.exposition.controller;
 
-import fr.utbm.fisa.communicationapi.infrastructure.entities.Communication_type;
+import fr.utbm.fisa.communicationapi.infrastructure.entities.CommunicationType;
 import fr.utbm.fisa.communicationapi.infrastructure.repositories.CommunicationTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class CommunicationTypeController {
-    private final CommunicationTypeRepository communication_typeRepository;
+    private final CommunicationTypeRepository communicationTypeRepository;
 
     /**
      * Gets all the communication types
@@ -19,8 +21,8 @@ public class CommunicationTypeController {
      * @return the list of communication types
      */
     @GetMapping("/communications_types")
-    public ResponseEntity<Iterable<Communication_type>> getAllCommunicationTypes() {
-        return ResponseEntity.ok(communication_typeRepository.findAll());
+    public ResponseEntity<Iterable<CommunicationType>> getAllCommunicationTypes() {
+        return ResponseEntity.ok(communicationTypeRepository.findAll());
     }
 
 }

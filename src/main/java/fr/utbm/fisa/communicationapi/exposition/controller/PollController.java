@@ -35,7 +35,7 @@ public class PollController {
      * @return the poll
      */
     @GetMapping("/polls/{id}")
-    public ResponseEntity<Poll> getPoll(@PathVariable int id) {
+    public ResponseEntity<Poll> getPoll(@PathVariable Long id) {
         Poll poll = pollRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No poll found with id " + id));
@@ -69,7 +69,7 @@ public class PollController {
      * @param id the poll's id
      */
     @DeleteMapping("/polls/{id}")
-    public void deletePoll(@PathVariable int id) {
+    public void deletePoll(@PathVariable Long id) {
         Poll poll = pollRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No poll found with id " + id));
@@ -85,7 +85,7 @@ public class PollController {
      * @return the updated poll|
      */
     @PutMapping("/polls/{id}")
-    public ResponseEntity<Poll> editPoll(@PathVariable int id, @RequestBody Poll data) {
+    public ResponseEntity<Poll> editPoll(@PathVariable Long id, @RequestBody Poll data) {
         Poll poll = pollRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No poll found with id " + id));
@@ -107,7 +107,7 @@ public class PollController {
      * @return the list of possible answers
      */
     @GetMapping("/polls/{id}/possible_answers")
-    public ResponseEntity<Iterable<PollAnswer>> getPollPossibleAnswers(@PathVariable int id) {
+    public ResponseEntity<Iterable<PollAnswer>> getPollPossibleAnswers(@PathVariable Long id) {
         Poll poll = pollRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No poll found with id " + id));
