@@ -7,17 +7,19 @@ import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "poll")
 public class Poll {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     private String description;
 
@@ -27,5 +29,5 @@ public class Poll {
     private Communication idCommunication;
 
     @OneToMany(mappedBy = "idPoll")
-    private List<PollAnswer> pollAnwserPerPollList;
+    private Set<PollAnswer> pollAnwserPerPollList;
 }

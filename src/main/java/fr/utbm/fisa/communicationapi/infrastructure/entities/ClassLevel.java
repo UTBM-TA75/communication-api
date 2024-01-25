@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Table(name = "class_level")
 public class ClassLevel {
 
     @Id
@@ -19,5 +20,5 @@ public class ClassLevel {
     private String name;
 
     @OneToMany(mappedBy = "idLevel")
-    private List<Classroom> idLevelList;
+    private List<ClassRoom> idLevelList;
 }

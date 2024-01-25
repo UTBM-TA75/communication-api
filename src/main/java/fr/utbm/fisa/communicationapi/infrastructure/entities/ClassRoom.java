@@ -5,14 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Classroom {
+@Table(name = "classroom")
+public class ClassRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -25,7 +25,7 @@ public class Classroom {
     private String promotion;
 
     @OneToMany(mappedBy = "idClassroom")
-    private List<Communication> communicationPerClassList;
+    private Set<Communication> communicationPerClassList;
 
     @ManyToMany
     private Set<Teacher> classUnderTeacher;

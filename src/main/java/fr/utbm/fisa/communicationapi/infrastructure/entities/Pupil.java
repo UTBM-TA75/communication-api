@@ -6,13 +6,13 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
+@Table(name = "pupil")
 public class Pupil {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +45,7 @@ public class Pupil {
     private Set<Parent> pupilUnderParent;
 
     @ManyToMany
-    private Set<Classroom> classroomOfPupil;
+    private Set<ClassRoom> classroomOfPupil;
 
     public enum RegistrationStatus{
         OnGoing,

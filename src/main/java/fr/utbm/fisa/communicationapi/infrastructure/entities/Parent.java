@@ -12,6 +12,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Table(name = "parent")
 public class Parent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

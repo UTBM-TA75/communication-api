@@ -10,16 +10,17 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-public class Communication_type {
+@Table(name = "communication_type")
+public class CommunicationType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    @Column(name = "communication_type_id")
+    private Long id;
 
     private String label;
 
     @OneToMany(mappedBy = "type")
-    private List<Communication> TypeCommunicationsList;
+    private Set<Communication> TypeCommunicationsList;
 
 }

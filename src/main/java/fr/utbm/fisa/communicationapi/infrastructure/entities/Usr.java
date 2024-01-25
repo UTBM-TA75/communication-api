@@ -8,12 +8,13 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "usr")
 public class Usr {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,19 +45,19 @@ public class Usr {
     private String profilePicture;
 
     @OneToMany(mappedBy = "idSender")
-    private List<Message> senderList;
+    private Set<Message> senderList;
 
     @OneToMany(mappedBy = "idUser")
-    private List<Staff> communicationSenderList;
+    private Set<Staff> communicationSenderList;
 
     @OneToMany(mappedBy = "user1")
-    private List<Discussion> discussionUser1List;
+    private Set<Discussion> discussionUser1List;
 
     @OneToMany(mappedBy = "user2")
-    private List<Discussion> discussionUser2List;
+    private Set<Discussion> discussionUser2List;
 
     @OneToMany(mappedBy = "idUser")
-    private List<Parent> userList;
+    private Set<Parent> userList;
 
     public enum UserType{
         Parent,

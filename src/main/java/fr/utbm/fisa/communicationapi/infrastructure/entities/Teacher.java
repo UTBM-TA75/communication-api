@@ -5,12 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
+@Table(name = "teacher")
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +25,5 @@ public class Teacher {
     private Timestamp endDate;
 
     @ManyToMany
-    private Set<Classroom> teacherClasses;
+    private Set<ClassRoom> teacherClasses;
 }
