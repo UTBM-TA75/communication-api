@@ -1,12 +1,17 @@
 package fr.utbm.fisa.communicationapi.exposition.controller;
 
+import fr.utbm.fisa.communicationapi.exposition.specifications.event.EventStartsAfterSpecification;
+import fr.utbm.fisa.communicationapi.exposition.specifications.event.EventStartsBeforeSpecification;
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Event;
 import fr.utbm.fisa.communicationapi.infrastructure.repositories.EventRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.sql.Date;
 
 @RestController
 @RequestMapping("/api")
@@ -20,8 +25,15 @@ public class EventController {
      * @return the list of events
      */
     @GetMapping("/events")
-    public ResponseEntity<Iterable<Event>> getAllEvents() {
-        return ResponseEntity.ok(eventRepository.findAll());
+    public ResponseEntity<Iterable<Event>> getAllEvents(
+            @RequestParam(value = "starts_before", required = false) Date startsBefore,
+            @RequestParam(value = "starts_after", required = false) Date startsAfter
+    ) {
+        Specification<Event> specs = Specification
+                .where(new EventStartsBeforeSpecification(startsBefore))
+                .and(new EventStartsAfterSpecification(startsAfter));
+
+        return ResponseEntity.ok(eventRepository.findAll(specs));
     }
 
     /**
