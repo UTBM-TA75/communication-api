@@ -3,12 +3,17 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
 
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/springapp
-    username: leo
-    password: root
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/local_database
+    username: bapt
+    password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 server:
   port: 8080
+  error:
+    include-message: always

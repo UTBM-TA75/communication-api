@@ -9,7 +9,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "communicationtype")
+@Table(name = "communication_type")
 public class CommunicationType {
 
     @Id

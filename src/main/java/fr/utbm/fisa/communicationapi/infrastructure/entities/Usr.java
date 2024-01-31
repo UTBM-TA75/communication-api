@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 import java.util.Set;
@@ -25,8 +27,12 @@ public class Usr {
 
     private String email;
 
+    @Column(nullable = false, updatable = false)
+    @CreationTimestamp
     private Timestamp createdAt;
 
+    @UpdateTimestamp
+    @Column(insertable = false)
     private Timestamp updatedAt;
 
     private Timestamp deletedAt;

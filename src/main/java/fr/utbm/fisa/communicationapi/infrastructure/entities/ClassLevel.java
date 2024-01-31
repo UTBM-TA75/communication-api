@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "classlevel")
+@Table(name = "class_level")
 public class ClassLevel {
 
     @Id
