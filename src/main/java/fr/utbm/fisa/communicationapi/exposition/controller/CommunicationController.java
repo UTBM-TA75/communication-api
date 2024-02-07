@@ -1,12 +1,15 @@
 package fr.utbm.fisa.communicationapi.exposition.controller;
 
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Communication;
+import fr.utbm.fisa.communicationapi.infrastructure.entities.CommunicationType;
 import fr.utbm.fisa.communicationapi.infrastructure.repositories.CommunicationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.sql.Date;
 
 
 @RestController
@@ -21,8 +24,10 @@ public class CommunicationController {
      * @return the list of communications
      */
     @GetMapping("/communications")
-    public ResponseEntity<Iterable<Communication>> getAllCommunication() {
-        return ResponseEntity.ok(communicationRepository.findAll());
+    public ResponseEntity<Iterable<Communication>> getAllCommunication(
+            @RequestParam(value = "type") CommunicationType communicationType
+    ) {
+        return ResponseEntity.ok(communicationRepository.findCommunicationsByType(communicationType));
     }
 
     /**
