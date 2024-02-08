@@ -80,7 +80,6 @@ public class DiscussionController {
         discussionRepository.deleteById(id);
     }
 
-    // TODO: comment me @Simon Eveillé
     @GetMapping("/discussions/preview")
     public ResponseEntity<Iterable<HomeDiscussionPreview>> getPreview(@RequestParam Long usrId) {
         ArrayList<HomeDiscussionPreview> previews = new ArrayList<>();
