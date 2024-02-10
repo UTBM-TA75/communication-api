@@ -16,7 +16,7 @@ public interface DiscussionRepository extends CrudRepository<Discussion, Long> {
 
     Optional<Discussion> findDiscussionByUser1AndUser2(Usr user1, Usr user2);
 
-    @Query(value = "SELECT COUNT(*) FROM message m WHERE m.idDiscussion = :idDiscussion AND m.seen =  0",
+    @Query(value = "SELECT COUNT(*) FROM message m WHERE m.discussion_id = :idDiscussion AND m.seen =  0",
             nativeQuery = true)
-    Integer countUnseenMessages(@Param("idDiscussion") Long idDiscussion);
+    Long countUnseenMessages(@Param("idDiscussion") Long idDiscussion);
 }

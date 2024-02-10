@@ -12,5 +12,5 @@ public class HomeDiscussionPreview {
     private String name;
     private LocalDate lastMessageReceived;
     private String message;
-    private int unseenCount;
+    private Long unseenCount;
 }

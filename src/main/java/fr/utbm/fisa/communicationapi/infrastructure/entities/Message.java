@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 
@@ -27,9 +28,11 @@ public class Message {
 
     private String body;
 
+    @Column(updatable = false)
+    @CreationTimestamp
     private Timestamp sentAt;
 
     private Timestamp seenAt;
 
-    private Boolean seen;
+    private Boolean seen = false;
 }

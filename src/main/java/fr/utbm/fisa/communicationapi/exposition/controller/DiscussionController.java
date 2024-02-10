@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +34,7 @@ public class DiscussionController {
      */
     @GetMapping("/discussions")
     public ResponseEntity<Iterable<DiscussionDTO>> getAllDiscussions() {
-        return ResponseEntity.ok(
-                discussionMapper.toDiscussionDTOList(discussionService.getAllDiscussions())
-        );
+        return ResponseEntity.ok(discussionService.getAllDiscussions());
     }
 
     /**
@@ -49,7 +46,7 @@ public class DiscussionController {
     @GetMapping("/discussions/{id}")
     public ResponseEntity<DiscussionDTO> getDiscussion(@PathVariable Long id) {
         return ResponseEntity.ok(
-                discussionMapper.toDiscussionDTO(discussionService.getDiscussion(id))
+                discussionService.getDiscussion(id)
         );
     }
 
@@ -73,12 +70,9 @@ public class DiscussionController {
      * @param id the discussion id
      */
     @DeleteMapping("/discussions/{id}")
-    public void deleteDiscussion(@PathVariable Long id) {
-        Discussion d = discussionRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No discussion found with id " + id));
-
-        discussionRepository.deleteById(id);
+    public ResponseEntity<?> deleteDiscussion(@PathVariable Long id) {
+        discussionService.deleteDiscussion(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/discussions/preview")
@@ -89,7 +83,7 @@ public class DiscussionController {
         for (Discussion d : discussions) {
             Message lastMessage = messageRepository.findMessageByDiscussion(d);
             String otherUser = d.getUser1().getId().equals(usrId) ? d.getUser2().getUsername() : d.getUser1().getUsername();
-            int unseenCount = discussionRepository.countUnseenMessages(d.getId());
+            Long unseenCount = discussionRepository.countUnseenMessages(d.getId());
 
             previews.add(
                     HomeDiscussionPreview.builder()
@@ -101,20 +95,5 @@ public class DiscussionController {
         }
 
         return ResponseEntity.ok(previews);
-    }
-
-    /**
-     * Get all the messages of a discussion
-     *
-     * @param id the discussion id
-     * @return the message list of the discussion
-     */
-    @GetMapping("/discussions/{id}/messages")
-    public ResponseEntity<Iterable<Message>> getMessages(@PathVariable Long id) {
-        Discussion discussion = discussionRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No discussion with id " + id));
-
-        return ResponseEntity.ok(discussion.getMessages());
     }
 }

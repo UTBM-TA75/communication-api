@@ -7,8 +7,11 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface MessageMapper {
+    @Mapping(target = "timestamp", source = "sentAt")
     @Mapping(target = "sentBy", source = "sender.id")
     @Mapping(target = "content", source = "body")
 
     public MessageDTO toDTO(Message message);
+
+    public Iterable<MessageDTO> toDTOList(Iterable<Message> messages);
 }

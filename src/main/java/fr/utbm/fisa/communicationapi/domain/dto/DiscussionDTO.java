@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class DiscussionDTO {
     private Long id;
-    private String user1;
-    private String user2;
+    private Long user1;
+    private Long user2;
     private MessageDTO lastMessage;
     private Long messagesNotSeen;
 }

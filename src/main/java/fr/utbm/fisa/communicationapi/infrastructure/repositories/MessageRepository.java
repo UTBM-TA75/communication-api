@@ -9,5 +9,7 @@ import java.util.List;
 public interface MessageRepository extends CrudRepository<Message, Long> {
     Message findMessageByDiscussion(Discussion discussion);
 
+    Message findFirstByDiscussionOrderBySentAtDesc(Discussion discussion);
+
     List<Message> findMessagesByDiscussion(Discussion discussion);
 }
