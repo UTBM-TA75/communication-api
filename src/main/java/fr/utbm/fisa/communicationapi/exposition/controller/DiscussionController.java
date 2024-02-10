@@ -1,10 +1,14 @@
 package fr.utbm.fisa.communicationapi.exposition.controller;
 
+import fr.utbm.fisa.communicationapi.domain.dto.DiscussionCreationDTO;
+import fr.utbm.fisa.communicationapi.domain.dto.DiscussionDTO;
 import fr.utbm.fisa.communicationapi.domain.dto.HomeDiscussionPreview;
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Discussion;
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Message;
+import fr.utbm.fisa.communicationapi.infrastructure.mappers.DiscussionMapper;
 import fr.utbm.fisa.communicationapi.infrastructure.repositories.DiscussionRepository;
 import fr.utbm.fisa.communicationapi.infrastructure.repositories.MessageRepository;
+import fr.utbm.fisa.communicationapi.logic.services.DiscussionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +25,8 @@ import java.util.List;
 public class DiscussionController {
     private final DiscussionRepository discussionRepository;
     private final MessageRepository messageRepository;
+    private final DiscussionService discussionService;
+    private final DiscussionMapper discussionMapper;
 
     /**
      * Gets all the discussions
@@ -28,8 +34,10 @@ public class DiscussionController {
      * @return the list of discussions
      */
     @GetMapping("/discussions")
-    public ResponseEntity<Iterable<Discussion>> getAllDiscussions() {
-        return ResponseEntity.ok(discussionRepository.findAll());
+    public ResponseEntity<Iterable<DiscussionDTO>> getAllDiscussions() {
+        return ResponseEntity.ok(
+                discussionMapper.toDiscussionDTOList(discussionService.getAllDiscussions())
+        );
     }
 
     /**
@@ -38,13 +46,11 @@ public class DiscussionController {
      * @param id the discussion's id
      * @return the discussion
      */
-    @GetMapping("/discussion/{id}")
-    public ResponseEntity<Discussion> getDiscussion(@PathVariable Long id) {
-        Discussion d = discussionRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No discussion found with the id " + id));
-
-        return ResponseEntity.ok(d);
+    @GetMapping("/discussions/{id}")
+    public ResponseEntity<DiscussionDTO> getDiscussion(@PathVariable Long id) {
+        return ResponseEntity.ok(
+                discussionMapper.toDiscussionDTO(discussionService.getDiscussion(id))
+        );
     }
 
     /**
@@ -54,16 +60,11 @@ public class DiscussionController {
      * @return the created discussion
      */
     @PostMapping("/discussions")
-    public ResponseEntity<Discussion> createDiscussion(@RequestBody Discussion discussion) {
-        // TODO: Add validation to test if the discussion between theses two users already exists
-        Discussion disc = new Discussion();
-        disc.setUser1(discussion.getUser1());
-        disc.setUser2(discussion.getUser2());
-        disc.setDiscussionList(discussion.getDiscussionList());
-
-        discussionRepository.save(disc);
-
-        return new ResponseEntity<>(disc, HttpStatus.CREATED);
+    public ResponseEntity<DiscussionDTO> createDiscussion(@RequestBody DiscussionCreationDTO discussion) {
+        return new ResponseEntity<>(
+                discussionService.createDiscussion(discussion),
+                HttpStatus.CREATED
+        );
     }
 
     /**
@@ -86,7 +87,7 @@ public class DiscussionController {
 
         List<Discussion> discussions = discussionRepository.findByUsrId(usrId);
         for (Discussion d : discussions) {
-            Message lastMessage = messageRepository.findMessageByIdDiscussion(d);
+            Message lastMessage = messageRepository.findMessageByDiscussion(d);
             String otherUser = d.getUser1().getId().equals(usrId) ? d.getUser2().getUsername() : d.getUser1().getUsername();
             int unseenCount = discussionRepository.countUnseenMessages(d.getId());
 
@@ -114,6 +115,6 @@ public class DiscussionController {
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No discussion with id " + id));
 
-        return ResponseEntity.ok(messageRepository.findMessagesByIdDiscussion(discussion));
+        return ResponseEntity.ok(discussion.getMessages());
     }
 }

@@ -46,7 +46,7 @@ public class Usr {
 
     private String profilePicture;
 
-    @OneToMany(mappedBy = "idSender")
+    @OneToMany(mappedBy = "sender")
     private Set<Message> senderList;
 
     @OneToMany(mappedBy = "idUser")

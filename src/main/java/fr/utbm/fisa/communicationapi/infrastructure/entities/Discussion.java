@@ -11,7 +11,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "discussion")
 public class Discussion {
 
     @Id
@@ -20,11 +19,13 @@ public class Discussion {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "user1")
     private Usr user1;
 
     @ManyToOne
+    @JoinColumn(name = "user2")
     private Usr user2;
 
-    @OneToMany(mappedBy = "idDiscussion")
-    private Set<Message> discussionList;
+    @OneToMany(mappedBy = "discussion")
+    private Set<Message> messages;
 }

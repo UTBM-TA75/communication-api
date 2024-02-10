@@ -2,6 +2,7 @@ package fr.utbm.fisa.communicationapi.exposition.controller;
 
 import fr.utbm.fisa.communicationapi.domain.dto.UserCreationDTO;
 import fr.utbm.fisa.communicationapi.domain.dto.UserDTO;
+import fr.utbm.fisa.communicationapi.infrastructure.mappers.UserMapper;
 import fr.utbm.fisa.communicationapi.logic.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final UserMapper userMapper;
 
     /**
      * Fetch all users
@@ -34,7 +36,9 @@ public class UserController {
      */
     @GetMapping("/users/{id}")
     public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.getUser(id));
+        return ResponseEntity.ok(
+                userMapper.toUserDTO(userService.getUser(id))
+        );
     }
 
     /**

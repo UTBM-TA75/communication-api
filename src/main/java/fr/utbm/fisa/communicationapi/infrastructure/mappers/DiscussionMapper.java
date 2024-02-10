@@ -7,6 +7,9 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface DiscussionMapper {
-    @Mapping(target = "user", source = "discussion.user1.id")
+    @Mapping(target = "user1", source = "discussion.user1.id")
+    @Mapping(target = "user2", source = "discussion.user2.id")
     DiscussionDTO toDiscussionDTO(Discussion discussion);
+
+    Iterable<DiscussionDTO> toDiscussionDTOList(Iterable<Discussion> discussions);
 }

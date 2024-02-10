@@ -20,16 +20,16 @@ public class Message {
     private Long id;
 
     @ManyToOne
-    private Usr idSender;
+    private Usr sender;
 
     @ManyToOne
-    private Discussion idDiscussion;
+    private Discussion discussion;
 
     private String body;
 
-    private Timestamp sentDate;
+    private Timestamp sentAt;
+
+    private Timestamp seenAt;
 
     private Boolean seen;
-
-    private Timestamp seenDate;
 }

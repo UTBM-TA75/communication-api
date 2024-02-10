@@ -22,12 +22,11 @@ public class UserService {
         );
     }
 
-    public UserDTO getUser(Long id) {
-        return userMapper.toUserDTO(
-                usrRepository
-                        .findById(id)
-                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + id))
-        );
+    public Usr getUser(Long id) {
+        return usrRepository
+                .findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + id));
+
     }
 
     public UserDTO createUser(UserCreationDTO userCreationDTO) {

@@ -24,8 +24,8 @@ public class MessageController {
     @PostMapping("/messages")
     public ResponseEntity<Message> createMessage(@RequestBody Message data) {
         Message message = new Message();
-        message.setIdSender(data.getIdSender());
-        message.setIdDiscussion(data.getIdDiscussion());
+        message.setSender(data.getSender());
+        message.setDiscussion(data.getDiscussion());
         message.setBody(data.getBody());
 
         messageRepository.save(message);
@@ -60,12 +60,12 @@ public class MessageController {
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No message found with id " + id));
 
-        message.setIdSender(data.getIdSender());
-        message.setIdDiscussion(data.getIdDiscussion());
+        message.setSender(data.getSender());
+        message.setDiscussion(data.getDiscussion());
         message.setBody(data.getBody());
-        message.setSentDate(data.getSentDate());
+        message.setSentAt(data.getSentAt());
         message.setSeen(data.getSeen());
-        message.setSeenDate(data.getSeenDate());
+        message.setSeenAt(data.getSeenAt());
 
         messageRepository.save(message);
 
