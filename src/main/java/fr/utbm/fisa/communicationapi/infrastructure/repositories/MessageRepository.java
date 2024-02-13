@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface MessageRepository extends CrudRepository<Message, Long> {
-    Message findMessageByDiscussion(Discussion discussion);
+    Message findMessageByDiscussionOrderBySentAtDesc(Discussion discussion);
 
     Message findFirstByDiscussionOrderBySentAtDesc(Discussion discussion);
 

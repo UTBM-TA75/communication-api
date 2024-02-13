@@ -8,6 +8,6 @@ import lombok.Setter;
 public class MessageDTO {
     private Long id;
     private String content;
-    private String sentBy;
+    private Long sentBy;
     private String timestamp;
 }

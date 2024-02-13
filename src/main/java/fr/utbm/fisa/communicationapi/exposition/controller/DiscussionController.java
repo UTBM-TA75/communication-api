@@ -81,7 +81,7 @@ public class DiscussionController {
 
         List<Discussion> discussions = discussionRepository.findByUsrId(usrId);
         for (Discussion d : discussions) {
-            Message lastMessage = messageRepository.findMessageByDiscussion(d);
+            Message lastMessage = messageRepository.findMessageByDiscussionOrderBySentAtDesc(d);
             String otherUser = d.getUser1().getId().equals(usrId) ? d.getUser2().getUsername() : d.getUser1().getUsername();
             Long unseenCount = discussionRepository.countUnseenMessages(d.getId());
 
