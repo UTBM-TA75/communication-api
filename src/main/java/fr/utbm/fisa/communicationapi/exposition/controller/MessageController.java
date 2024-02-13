@@ -65,7 +65,7 @@ public class MessageController {
      * @param data         the updated message data
      * @return the updated message
      */
-    @PutMapping("/discussions/{discussionId}/messages/{messageId}")
+    @PatchMapping("/discussions/{discussionId}/messages/{messageId}")
     public ResponseEntity<MessageDTO> updateMessage(
             @PathVariable Long discussionId,
             @PathVariable Long messageId,
