@@ -9,5 +9,6 @@ public class MessageDTO {
     private Long id;
     private String content;
     private Long sentBy;
-    private String timestamp;
+    private String sentAt;
+    private String seenAt;
 }

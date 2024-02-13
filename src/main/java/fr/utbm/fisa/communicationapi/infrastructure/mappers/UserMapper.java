@@ -10,11 +10,11 @@ import org.mapstruct.Mapping;
 public interface UserMapper {
     @Mapping(source = "userType", target = "type")
     @Mapping(source = "isAdmin", target = "isAdmin")
-    public UserDTO toUserDTO(Usr usr);
+    UserDTO toUserDTO(Usr usr);
 
-    public Iterable<UserDTO> toUserDTOList(Iterable<Usr> users);
+    Iterable<UserDTO> toUserDTOList(Iterable<Usr> users);
 
     @Mapping(source = "isAdmin", target = "isAdmin")
     @Mapping(source = "type", target = "userType")
-    public Usr toUsr(UserCreationDTO userCreationDTO);
+    Usr toUsr(UserCreationDTO userCreationDTO);
 }
