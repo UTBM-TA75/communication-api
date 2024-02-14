@@ -17,7 +17,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "usr")
 public class Usr implements UserDetails {
 
@@ -44,14 +43,16 @@ public class Usr implements UserDetails {
 
     private Timestamp deletedAt;
 
+    @Column(nullable = false)
     private Boolean isAdmin;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
     private String profilePicture;
 
-    @OneToMany(mappedBy = "idSender")
+    @OneToMany(mappedBy = "sender")
     private Set<Message> senderList;
 
     @OneToMany(mappedBy = "idUser")
