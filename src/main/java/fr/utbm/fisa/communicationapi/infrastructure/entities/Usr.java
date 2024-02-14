@@ -89,11 +89,6 @@ public class Usr implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return false;
-    }
-
-    public enum UserType{
-        Parent,
-        Staff
+        return true;
     }
 }

@@ -1,5 +1,8 @@
 package fr.utbm.fisa.communicationapi.domain.services;
 
+import fr.utbm.fisa.communicationapi.domain.dto.UserDto;
+import fr.utbm.fisa.communicationapi.infrastructure.entities.Usr;
+import org.apache.catalina.realm.UserDatabaseRealm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -31,11 +34,11 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(Usr userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+    public String generateToken(Map<String, Object> extraClaims, Usr userDetails) {
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
@@ -45,13 +48,13 @@ public class JwtService {
 
     private String buildToken(
             Map<String, Object> extraClaims,
-            UserDetails userDetails,
+            Usr userDetails,
             long expiration
     ) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(userDetails.getId().toString())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
