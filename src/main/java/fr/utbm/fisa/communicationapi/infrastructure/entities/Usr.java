@@ -37,14 +37,16 @@ public class Usr {
 
     private Timestamp deletedAt;
 
+    @Column(nullable = false)
     private Boolean isAdmin;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
     private String profilePicture;
 
-    @OneToMany(mappedBy = "idSender")
+    @OneToMany(mappedBy = "sender")
     private Set<Message> senderList;
 
     @OneToMany(mappedBy = "idUser")
@@ -58,9 +60,4 @@ public class Usr {
 
     @OneToMany(mappedBy = "idUser")
     private Set<Parent> userList;
-
-    public enum UserType{
-        Parent,
-        Staff
-    }
 }

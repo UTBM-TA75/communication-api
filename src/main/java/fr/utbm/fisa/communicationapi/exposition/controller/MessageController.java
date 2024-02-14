@@ -1,74 +1,74 @@
 package fr.utbm.fisa.communicationapi.exposition.controller;
 
-import fr.utbm.fisa.communicationapi.infrastructure.entities.Message;
-import fr.utbm.fisa.communicationapi.infrastructure.repositories.MessageRepository;
+import fr.utbm.fisa.communicationapi.domain.dto.MessageCreationDto;
+import fr.utbm.fisa.communicationapi.domain.dto.MessageDto;
+import fr.utbm.fisa.communicationapi.domain.dto.MessageEditionDto;
+import fr.utbm.fisa.communicationapi.logic.services.MessageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class MessageController {
-    private final MessageRepository messageRepository;
+    private final MessageService messageService;
+
 
     /**
-     * Create a message
+     * Get all the messages of a discussion
      *
-     * @param data the message's data to create
-     * @return the created message
+     * @param id the discussion id
+     * @return the message list of the discussion
      */
-    @PostMapping("/messages")
-    public ResponseEntity<Message> createMessage(@RequestBody Message data) {
-        Message message = new Message();
-        message.setIdSender(data.getIdSender());
-        message.setIdDiscussion(data.getIdDiscussion());
-        message.setBody(data.getBody());
+    @GetMapping("/discussions/{id}/messages")
+    public ResponseEntity<Iterable<MessageDto>> getMessages(@PathVariable Long id) {
+        return ResponseEntity.ok(messageService.getMessages(id));
+    }
 
-        messageRepository.save(message);
-
-        return new ResponseEntity<>(message, HttpStatus.CREATED);
+    @GetMapping("/discussions/{discussionId}/messages/{messageId}")
+    public ResponseEntity<MessageDto> getMessage(@PathVariable Long discussionId, @PathVariable Long messageId) {
+        return ResponseEntity.ok(messageService.getMessage(messageId));
     }
 
     /**
-     * Deletes a message
+     * Create a new message in a discussion
      *
-     * @param id the message's id
+     * @param id      the discussion id
+     * @param message the message
+     * @return the updated list of messages
      */
-    @GetMapping("/messages/{id}")
-    public void delete(@PathVariable Long id) {
-        Message message = messageRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No message found with id " + id));
+    @PostMapping("/discussions/{id}/messages")
+    public ResponseEntity<Iterable<MessageDto>> createMessage(@PathVariable Long id, @RequestBody MessageCreationDto message) {
+        return ResponseEntity.ok(messageService.createMessage(id, message));
+    }
 
-        messageRepository.deleteById(message.getId());
+    /**
+     * Deletes a message in a discussion
+     *
+     * @param discussionId the discussion id
+     * @param messageId    the message id to delete
+     * @return the updated list of messages
+     */
+    @DeleteMapping("/discussions/{discussionId}/messages/{messageId}")
+    public ResponseEntity<Iterable<MessageDto>> deleteMessage(@PathVariable Long discussionId, @PathVariable Long messageId) {
+        return ResponseEntity.ok(messageService.deleteMessage(discussionId, messageId));
     }
 
     /**
      * Updates a message
      *
-     * @param id   the message's id
-     * @param data the message's updated data
+     * @param discussionId the discussion id
+     * @param messageId    the message id to update
+     * @param data         the updated message data
      * @return the updated message
      */
-    @PutMapping("/messages/{id}")
-    public ResponseEntity<Message> edit(@PathVariable Long id, @RequestBody Message data) {
-        Message message = messageRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No message found with id " + id));
+    @PatchMapping("/discussions/{discussionId}/messages/{messageId}")
+    public ResponseEntity<MessageDto> updateMessage(
+            @PathVariable Long discussionId,
+            @PathVariable Long messageId,
+            @RequestBody MessageEditionDto data) {
+        return ResponseEntity.ok(messageService.updateMessage(discussionId, messageId, data));
 
-        message.setIdSender(data.getIdSender());
-        message.setIdDiscussion(data.getIdDiscussion());
-        message.setBody(data.getBody());
-        message.setSentDate(data.getSentDate());
-        message.setSeen(data.getSeen());
-        message.setSeenDate(data.getSeenDate());
-
-        messageRepository.save(message);
-
-        return ResponseEntity.ok(message);
     }
 }

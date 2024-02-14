@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 
@@ -20,16 +21,18 @@ public class Message {
     private Long id;
 
     @ManyToOne
-    private Usr idSender;
+    private Usr sender;
 
     @ManyToOne
-    private Discussion idDiscussion;
+    private Discussion discussion;
 
     private String body;
 
-    private Timestamp sentDate;
+    @Column(updatable = false)
+    @CreationTimestamp
+    private Timestamp sentAt;
 
-    private Boolean seen;
+    private Timestamp seenAt;
 
-    private Timestamp seenDate;
+    private Boolean seen = false;
 }

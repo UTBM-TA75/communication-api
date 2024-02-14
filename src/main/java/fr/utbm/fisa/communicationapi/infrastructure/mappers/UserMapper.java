@@ -1,0 +1,20 @@
+package fr.utbm.fisa.communicationapi.infrastructure.mappers;
+
+import fr.utbm.fisa.communicationapi.domain.dto.UserCreationDto;
+import fr.utbm.fisa.communicationapi.domain.dto.UserDto;
+import fr.utbm.fisa.communicationapi.infrastructure.entities.Usr;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+@Mapper(componentModel = "spring")
+public interface UserMapper {
+    @Mapping(source = "userType", target = "type")
+    @Mapping(source = "isAdmin", target = "isAdmin")
+    UserDto toUserDTO(Usr usr);
+
+    Iterable<UserDto> toUserDTOList(Iterable<Usr> users);
+
+    @Mapping(source = "isAdmin", target = "isAdmin")
+    @Mapping(source = "type", target = "userType")
+    Usr toUsr(UserCreationDto userCreationDTO);
+}

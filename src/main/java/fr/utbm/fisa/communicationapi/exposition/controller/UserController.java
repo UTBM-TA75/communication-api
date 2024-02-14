@@ -1,19 +1,22 @@
 package fr.utbm.fisa.communicationapi.exposition.controller;
 
-import fr.utbm.fisa.communicationapi.infrastructure.entities.Usr;
-import fr.utbm.fisa.communicationapi.infrastructure.repositories.UsrRepository;
+import fr.utbm.fisa.communicationapi.domain.dto.UserCreationDto;
+import fr.utbm.fisa.communicationapi.domain.dto.UserDto;
+import fr.utbm.fisa.communicationapi.infrastructure.mappers.UserMapper;
+import fr.utbm.fisa.communicationapi.logic.services.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
-    private final UsrRepository usrRepository;
+    private final UserService userService;
+    private final UserMapper userMapper;
 
     /**
      * Fetch all users
@@ -21,8 +24,8 @@ public class UserController {
      * @return the list of users
      */
     @GetMapping("/users")
-    public ResponseEntity<Iterable<Usr>> getAllUsers() {
-        return ResponseEntity.ok(usrRepository.findAll());
+    public ResponseEntity<Iterable<UserDto>> getAllUsers() {
+        return ResponseEntity.ok(userService.getUsers());
     }
 
     /**
@@ -32,11 +35,10 @@ public class UserController {
      * @return the user with the specific id | 404 if not found
      */
     @GetMapping("/users/{id}")
-    public ResponseEntity<Usr> getUser(@PathVariable Long id) {
-        Usr user = usrRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + id));
-        return ResponseEntity.ok(user);
+    public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
+        return ResponseEntity.ok(
+                userMapper.toUserDTO(userService.getUser(id))
+        );
     }
 
     /**
@@ -46,17 +48,9 @@ public class UserController {
      * @return the created user
      */
     @PostMapping("/users")
-    public ResponseEntity<Usr> createUser(@RequestBody Usr data) {
-        Usr user = new Usr();
-        user.setUsername(data.getUsername());
-        user.setPassword(data.getPassword());
-        user.setEmail(data.getEmail());
-        user.setIsAdmin(data.getIsAdmin());
-        user.setUserType(data.getUserType());
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserCreationDto data) {
 
-        usrRepository.save(user);
-
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.createUser(data), HttpStatus.CREATED);
     }
 
     /**
@@ -67,21 +61,11 @@ public class UserController {
      * @return the updated user
      */
     @PutMapping("/users/{id}")
-    public ResponseEntity<Usr> updateUser(@PathVariable Long id, @RequestBody Usr data) {
-        Usr user = usrRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + id));
-
-        user.setUsername(data.getUsername());
-        user.setPassword(data.getPassword());
-        user.setEmail(data.getEmail());
-        user.setIsAdmin(data.getIsAdmin());
-        user.setUserType(data.getUserType());
-        user.setProfilePicture(data.getProfilePicture());
-
-        usrRepository.save(user);
-
-        return ResponseEntity.ok(user);
+    public ResponseEntity<UserDto> updateUser(
+            @PathVariable Long id,
+            @RequestBody UserCreationDto data
+    ) {
+        return ResponseEntity.ok(userService.updateUser(id, data));
     }
 
     /**
@@ -91,10 +75,6 @@ public class UserController {
      */
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable Long id) {
-        Usr user = usrRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + id));
-
-        usrRepository.deleteById(user.getId());
+        userService.deleteUser(id);
     }
 }
