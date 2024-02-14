@@ -26,6 +26,6 @@ public class Discussion {
     @JoinColumn(name = "user2")
     private Usr user2;
 
-    @OneToMany(mappedBy = "discussion")
+    @OneToMany(mappedBy = "discussion", cascade = CascadeType.ALL)
     private Set<Message> messages;
 }
