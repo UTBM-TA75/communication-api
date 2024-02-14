@@ -1,16 +1,15 @@
 package fr.utbm.fisa.communicationapi.domain.services;
 
-import fr.utbm.fisa.communicationapi.domain.dto.UserDto;
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Usr;
-import org.apache.catalina.realm.UserDatabaseRealm;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
