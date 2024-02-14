@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MessageCreationDTO {
+public class MessageCreationDto {
     private String content;
     private Long sentBy;
 }

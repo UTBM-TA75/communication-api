@@ -1,7 +1,7 @@
 package fr.utbm.fisa.communicationapi.logic.services;
 
-import fr.utbm.fisa.communicationapi.domain.dto.UserCreationDTO;
-import fr.utbm.fisa.communicationapi.domain.dto.UserDTO;
+import fr.utbm.fisa.communicationapi.domain.dto.UserCreationDto;
+import fr.utbm.fisa.communicationapi.domain.dto.UserDto;
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Usr;
 import fr.utbm.fisa.communicationapi.infrastructure.mappers.UserMapper;
 import fr.utbm.fisa.communicationapi.infrastructure.repositories.UsrRepository;
@@ -16,7 +16,7 @@ public class UserService {
     private final UsrRepository usrRepository;
     private final UserMapper userMapper;
 
-    public Iterable<UserDTO> getUsers() {
+    public Iterable<UserDto> getUsers() {
         return userMapper.toUserDTOList(
                 usrRepository.findAll()
         );
@@ -29,7 +29,7 @@ public class UserService {
 
     }
 
-    public UserDTO createUser(UserCreationDTO userCreationDTO) {
+    public UserDto createUser(UserCreationDto userCreationDTO) {
         Usr userToCreate = userMapper.toUsr(userCreationDTO);
 
         return userMapper.toUserDTO(
@@ -37,7 +37,7 @@ public class UserService {
         );
     }
 
-    public UserDTO updateUser(Long id, UserCreationDTO userCreationDTO) {
+    public UserDto updateUser(Long id, UserCreationDto userCreationDTO) {
         Usr userToUpdate = usrRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + id));

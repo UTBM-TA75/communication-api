@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MessageEditionDTO {
+public class MessageEditionDto {
     @NotBlank(message = "The content of the message cannot be empty")
     private String content;
 }

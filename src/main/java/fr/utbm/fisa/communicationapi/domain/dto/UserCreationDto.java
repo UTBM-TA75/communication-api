@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserCreationDTO {
+public class UserCreationDto {
 
     @NotBlank(message = "username is mandatory")
     private String username;

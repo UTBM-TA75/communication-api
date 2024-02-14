@@ -1,8 +1,8 @@
 package fr.utbm.fisa.communicationapi.logic.services;
 
-import fr.utbm.fisa.communicationapi.domain.dto.MessageCreationDTO;
-import fr.utbm.fisa.communicationapi.domain.dto.MessageDTO;
-import fr.utbm.fisa.communicationapi.domain.dto.MessageEditionDTO;
+import fr.utbm.fisa.communicationapi.domain.dto.MessageCreationDto;
+import fr.utbm.fisa.communicationapi.domain.dto.MessageDto;
+import fr.utbm.fisa.communicationapi.domain.dto.MessageEditionDto;
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Discussion;
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Message;
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Usr;
@@ -29,7 +29,7 @@ public class MessageService {
      * @param discussionId the discussion id
      * @return the list of messages (DTO)
      */
-    public Iterable<MessageDTO> getMessages(Long discussionId) {
+    public Iterable<MessageDto> getMessages(Long discussionId) {
         Discussion discussion = getDiscussion(discussionId);
 
         // Here we use the getMessages() method because it is less code
@@ -39,15 +39,14 @@ public class MessageService {
     /**
      * Returns a specific message of a discussion
      *
-     * @param discussionId the discussion if
-     * @param messageId    the message id
+     * @param messageId the message id
      * @return the message
      */
-    public MessageDTO getMessage(Long discussionId, Long messageId) {
-        // We fetch the discussion to test if the caller is part of it.
-        Discussion discussion = getDiscussion(discussionId);
+    public MessageDto getMessage(Long messageId) {
+        Message message = messageRepository.findById(messageId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No message found with id " + messageId));
 
-        return messageMapper.toDTO(getMessage(messageId));
+        return messageMapper.toDTO(message);
     }
 
     /**
@@ -57,7 +56,7 @@ public class MessageService {
      * @param message      the message
      * @return the created message (DTO)
      */
-    public Iterable<MessageDTO> createMessage(Long discussionId, MessageCreationDTO message) {
+    public Iterable<MessageDto> createMessage(Long discussionId, MessageCreationDto message) {
         Discussion discussion = getDiscussion(discussionId);
 
         Usr sender = getUser(message.getSentBy());
@@ -73,10 +72,11 @@ public class MessageService {
         return getMessages(discussionId);
     }
 
-    public MessageDTO updateMessage(Long discussionId, Long messageId, MessageEditionDTO messageEditionDTO) {
-        Discussion discussion = getDiscussion(discussionId);
+    public MessageDto updateMessage(Long discussionId, Long messageId, MessageEditionDto messageEditionDTO) {
 
-        Message message = getMessage(messageId);
+        Message message = messageRepository.findById(messageId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No message found with id " + messageId));
+
         message.setBody(messageEditionDTO.getContent());
 
         return messageMapper.toDTO(messageRepository.save(message));
@@ -88,8 +88,7 @@ public class MessageService {
      * @param discussionId the discussion id
      * @param messageId    the message id
      */
-    public Iterable<MessageDTO> deleteMessage(Long discussionId, Long messageId) {
-        Discussion discussion = getDiscussion(discussionId);
+    public Iterable<MessageDto> deleteMessage(Long discussionId, Long messageId) {
 
         messageRepository.deleteById(getMessage(messageId).getId());
 
@@ -99,11 +98,6 @@ public class MessageService {
     private Discussion getDiscussion(Long discussionId) {
         return discussionRepository.findById(discussionId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No discussion found with the id " + discussionId));
-    }
-
-    private Message getMessage(Long messageId) {
-        return messageRepository.findById(messageId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No message found with id " + messageId));
     }
 
     private Usr getUser(Long userId) {

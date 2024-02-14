@@ -1,8 +1,8 @@
 package fr.utbm.fisa.communicationapi.logic.services;
 
-import fr.utbm.fisa.communicationapi.domain.dto.DiscussionCreationDTO;
-import fr.utbm.fisa.communicationapi.domain.dto.DiscussionDTO;
-import fr.utbm.fisa.communicationapi.domain.dto.MessageDTO;
+import fr.utbm.fisa.communicationapi.domain.dto.DiscussionCreationDto;
+import fr.utbm.fisa.communicationapi.domain.dto.DiscussionDto;
+import fr.utbm.fisa.communicationapi.domain.dto.MessageDto;
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Discussion;
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Usr;
 import fr.utbm.fisa.communicationapi.infrastructure.mappers.DiscussionMapper;
@@ -22,7 +22,6 @@ public class DiscussionService {
     private final DiscussionRepository discussionRepository;
     private final DiscussionMapper discussionMapper;
     private final UserService userService;
-    private final MessageService messageService;
     private final MessageRepository messageRepository;
     private final MessageMapper messageMapper;
 
@@ -32,21 +31,19 @@ public class DiscussionService {
      *
      * @return the list of discussions
      */
-    public Iterable<DiscussionDTO> getAllDiscussions() {
+    public Iterable<DiscussionDto> getAllDiscussions() {
         Iterable<Discussion> discussions = discussionRepository.findAll();
 
-        ArrayList<DiscussionDTO> discussionDTOS = new ArrayList<>();
-        discussions.forEach(discussion -> {
-            discussionDTOS.add(
-                    discussionMapper.toDiscussionDTO(
-                            discussion,
-                            getLastMessage(discussion),
-                            countUnseenMessages(discussion)
-                    )
-            );
-        });
+        ArrayList<DiscussionDto> discussionDtos = new ArrayList<>();
+        discussions.forEach(discussion -> discussionDtos.add(
+                discussionMapper.toDiscussionDTO(
+                        discussion,
+                        getLastMessage(discussion),
+                        countUnseenMessages(discussion)
+                )
+        ));
 
-        return discussionDTOS;
+        return discussionDtos;
     }
 
     /**
@@ -55,7 +52,7 @@ public class DiscussionService {
      * @param id the discussion id
      * @return the discussion
      */
-    public DiscussionDTO getDiscussion(Long id) {
+    public DiscussionDto getDiscussion(Long id) {
         Discussion discussion = discussionRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No discussion found with the id " + id));
@@ -73,7 +70,7 @@ public class DiscussionService {
      * @param discussionCreationDTO the discussion data
      * @return the created discussion
      */
-    public DiscussionDTO createDiscussion(DiscussionCreationDTO discussionCreationDTO) {
+    public DiscussionDto createDiscussion(DiscussionCreationDto discussionCreationDTO) {
         Discussion discussionToCreate = new Discussion();
 
         // checks if users exist
@@ -119,14 +116,10 @@ public class DiscussionService {
      * @param discussionId the discussion id
      */
     public void deleteDiscussion(Long discussionId) {
-        Discussion d = discussionRepository
-                .findById(discussionId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No discussion found with id " + discussionId));
-
         discussionRepository.deleteById(discussionId);
     }
 
-    private MessageDTO getLastMessage(Discussion discussion) {
+    private MessageDto getLastMessage(Discussion discussion) {
         return messageMapper.toDTO(messageRepository.findFirstByDiscussionOrderBySentAtDesc(discussion));
     }
 }

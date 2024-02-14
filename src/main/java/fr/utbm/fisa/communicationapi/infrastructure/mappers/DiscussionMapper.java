@@ -1,15 +1,15 @@
 package fr.utbm.fisa.communicationapi.infrastructure.mappers;
 
-import fr.utbm.fisa.communicationapi.domain.dto.DiscussionDTO;
-import fr.utbm.fisa.communicationapi.domain.dto.MessageDTO;
+import fr.utbm.fisa.communicationapi.domain.dto.DiscussionDto;
+import fr.utbm.fisa.communicationapi.domain.dto.MessageDto;
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Discussion;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface DiscussionMapper {
 
-    default DiscussionDTO toDiscussionDTO(Discussion discussion, MessageDTO lastMessage, Long messagesNotSeen) {
-        DiscussionDTO dto = new DiscussionDTO();
+    default DiscussionDto toDiscussionDTO(Discussion discussion, MessageDto lastMessage, Long messagesNotSeen) {
+        DiscussionDto dto = new DiscussionDto();
 
         dto.setId(discussion.getId());
         dto.setUser1(discussion.getUser1().getId());

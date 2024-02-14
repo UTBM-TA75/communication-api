@@ -5,10 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserDTO {
+public class MessageDto {
     private Long id;
-    private String username;
-    private String email;
-    private String type;
-    private Boolean isAdmin;
+    private String content;
+    private Long sentBy;
+    private String sentAt;
+    private String seenAt;
 }

@@ -1,11 +1,10 @@
 package fr.utbm.fisa.communicationapi.exposition.controller;
 
-import fr.utbm.fisa.communicationapi.domain.dto.DiscussionCreationDTO;
-import fr.utbm.fisa.communicationapi.domain.dto.DiscussionDTO;
+import fr.utbm.fisa.communicationapi.domain.dto.DiscussionCreationDto;
+import fr.utbm.fisa.communicationapi.domain.dto.DiscussionDto;
 import fr.utbm.fisa.communicationapi.domain.dto.HomeDiscussionPreview;
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Discussion;
 import fr.utbm.fisa.communicationapi.infrastructure.entities.Message;
-import fr.utbm.fisa.communicationapi.infrastructure.mappers.DiscussionMapper;
 import fr.utbm.fisa.communicationapi.infrastructure.repositories.DiscussionRepository;
 import fr.utbm.fisa.communicationapi.infrastructure.repositories.MessageRepository;
 import fr.utbm.fisa.communicationapi.logic.services.DiscussionService;
@@ -25,7 +24,6 @@ public class DiscussionController {
     private final DiscussionRepository discussionRepository;
     private final MessageRepository messageRepository;
     private final DiscussionService discussionService;
-    private final DiscussionMapper discussionMapper;
 
     /**
      * Gets all the discussions
@@ -33,7 +31,7 @@ public class DiscussionController {
      * @return the list of discussions
      */
     @GetMapping("/discussions")
-    public ResponseEntity<Iterable<DiscussionDTO>> getAllDiscussions() {
+    public ResponseEntity<Iterable<DiscussionDto>> getAllDiscussions() {
         return ResponseEntity.ok(discussionService.getAllDiscussions());
     }
 
@@ -44,7 +42,7 @@ public class DiscussionController {
      * @return the discussion
      */
     @GetMapping("/discussions/{id}")
-    public ResponseEntity<DiscussionDTO> getDiscussion(@PathVariable Long id) {
+    public ResponseEntity<DiscussionDto> getDiscussion(@PathVariable Long id) {
         return ResponseEntity.ok(
                 discussionService.getDiscussion(id)
         );
@@ -57,7 +55,7 @@ public class DiscussionController {
      * @return the created discussion
      */
     @PostMapping("/discussions")
-    public ResponseEntity<DiscussionDTO> createDiscussion(@RequestBody DiscussionCreationDTO discussion) {
+    public ResponseEntity<DiscussionDto> createDiscussion(@RequestBody DiscussionCreationDto discussion) {
         return new ResponseEntity<>(
                 discussionService.createDiscussion(discussion),
                 HttpStatus.CREATED

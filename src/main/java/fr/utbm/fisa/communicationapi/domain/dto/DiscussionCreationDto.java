@@ -5,10 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DiscussionDTO {
-    private Long id;
+public class DiscussionCreationDto {
     private Long user1;
     private Long user2;
-    private MessageDTO lastMessage;
-    private Long messagesNotSeen;
 }
