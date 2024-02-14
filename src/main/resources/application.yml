@@ -7,12 +7,16 @@ spring:
       hibernate:
         globally_quoted_identifiers: true
 
-  datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/local_database
-    username: bapt
-    password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
 
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/spring-db
+    username: spring-user
+    password: spring
+    driver-class-name: com.mysql.cj.jdbc.Driver
+security:
+  jwt:
+    secret-key: 521ea00ec08f3f7882ea192d9d00f4d7e6d73fd3675f46bd015b924a33a7eb8d
+    expiration-time: 3600000
 server:
   port: 8080
   error:
