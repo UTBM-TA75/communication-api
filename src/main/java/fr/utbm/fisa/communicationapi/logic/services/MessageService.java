@@ -33,7 +33,7 @@ public class MessageService {
         Discussion discussion = getDiscussion(discussionId);
 
         // Here we use the getMessages() method because it is less code
-        return messageMapper.toDTOList(discussion.getMessages());
+        return messageMapper.toDTOList(messageRepository.findMessagesByDiscussionOrderBySentAtAsc(discussion));
     }
 
     /**
